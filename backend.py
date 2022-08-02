@@ -53,4 +53,4 @@ def delete(id):
 
 # create_table()
 # create_password("Facebook", "1234444")
-print(view_all())
+# print(view_all())
