@@ -7,15 +7,16 @@ def create_table():
         cursor.execute("""CREATE TABLE IF NOT EXISTS password (
             id INTEGER PRIMARY KEY,
             website CHAR(50),
+            username CHAR(25),
             password CHAR(20)
         )""")
         connection.commit()
 
 
-def create_password(website, password):
+def create_password(website, username, password):
     with sqlite3.connect("data.db") as connection:
         cursor = connection.cursor()
-        cursor.execute("""INSERT INTO password VALUES(NULL, ?,?)""", (website, password))
+        cursor.execute("""INSERT INTO password VALUES(NULL, ?,?,?)""", (website, username, password))
         connection.commit()
 
 
@@ -34,13 +35,13 @@ def view_any(website):
         rows = cursor.fetchall()
         connection.commit()
         for row in rows:
-            return row
+            return "".join(row)
 
 
-def update(id, website, password):
+def update(website, username, password):
     with sqlite3.connect("data.db") as connection:
         cursor = connection.cursor()
-        cursor.execute("UPDATE password SET website=?, password=? WHERE id=?", (website, password, id))
+        cursor.execute("UPDATE password SET username=?, password=? WHERE website=?", (website, username, password))
         connection.commit()
 
 
@@ -51,7 +52,8 @@ def delete(website):
         connection.commit()
 
 
-print(view_all())
+# print(view_all())
 # create_table()
+update("facebook", "oreoluwa", "hefbehb")
 # create_password("Facebook", "1234444")
 # print(view_all())
