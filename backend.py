@@ -44,13 +44,14 @@ def update(id, website, password):
         connection.commit()
 
 
-def delete(id):
+def delete(website):
     with sqlite3.connect("data.db") as connection:
         cursor = connection.cursor()
-        cursor.execute("DELETE FROM password WHERE id=?", (id,))
+        cursor.execute("DELETE FROM password WHERE website=?", (website,))
         connection.commit()
 
 
+print(view_all())
 # create_table()
 # create_password("Facebook", "1234444")
 # print(view_all())
