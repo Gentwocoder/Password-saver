@@ -19,12 +19,18 @@ def saver():
     get_username = entry4.get().lower()
     get_password = entry2.get()
     if len(get_website) != 0 and len(get_username) != 0 and len(get_password) != 0:
-        bk.create_password(get_website, get_username, get_password)
-        messagebox.showinfo(title="Successful", message="Password added successfully")
-        entry.delete(0, "end")
-        entry4.delete(0, "end")
-        entry2.delete(0, "end")
-        entry.focus()
+        answer = messagebox.askyesno(title="Confirm Details", message=f"""
+        Please confirm details
+        Username: {get_username}
+        Password: {get_password}
+        """)
+        if answer:
+            bk.create_password(get_website, get_username, get_password)
+            messagebox.showinfo(title="Successful", message="Password added successfully")
+            entry.delete(0, "end")
+            entry4.delete(0, "end")
+            entry2.delete(0, "end")
+            entry.focus()
     else:
         messagebox.showerror(title="No blank spaces", message="No space should be left blank")
         entry.focus()
@@ -56,10 +62,11 @@ def search():
 
 def remove():
     deleter = entry.get().lower()
-    messagebox.askokcancel(title="askokcancel", message="Are you sure you want to delete?")
-    bk.delete(deleter)
-    entry.delete(0, "end")
-    messagebox.showinfo(title="Deleted", message="Deleted Successfully")
+    answer = messagebox.askokcancel(title="askokcancel", message="Are you sure you want to delete?")
+    if answer:
+        bk.delete(deleter)
+        entry.delete(0, "end")
+        messagebox.showinfo(title="Deleted", message="Deleted Successfully")
 
 
 frame = tk.Frame(width=50, height=50)

@@ -54,6 +54,5 @@ def delete(website):
 
 # print(view_all())
 # create_table()
-update("facebook", "oreoluwa", "hefbehb")
 # create_password("Facebook", "1234444")
-# print(view_all())
+print(view_all())
