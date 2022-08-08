@@ -46,4 +46,3 @@ class Backend:
             cursor = connection.cursor()
             cursor.execute("DELETE FROM password WHERE website=?", (website,))
             connection.commit()
-
