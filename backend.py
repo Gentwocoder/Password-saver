@@ -47,8 +47,3 @@ class Backend:
             cursor.execute("DELETE FROM password WHERE website=?", (website,))
             connection.commit()
 
-
-# print(view_all())
-# create_table()
-# create_password("Facebook", "1234444")
-print(view_all())
