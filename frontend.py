@@ -3,7 +3,7 @@ from tkinter import messagebox
 
 import pyperclip as pc
 from PIL import ImageTk, Image
-import backend as bk
+from backend import Backend
 import random_pass_gen as rpg
 import tkinter as tk
 
@@ -12,6 +12,7 @@ window = tk.Tk()
 window.geometry("700x700")
 window.resizable(width=False, height=False)
 window.title("Password saver")
+bk = Backend
 
 
 def saver():
@@ -53,8 +54,11 @@ def search():
         searcher = entry.get().lower()
         searched = bk.view_any(searcher)
         entry2.delete(0, "end")
-        messagebox.showinfo(title="Successful", message=f"Your {searcher} password is {searched}")
         entry.delete(0, "end")
+        if searched is None:
+            messagebox.showerror(title="not found", message="Password not found")
+        else:
+            messagebox.showinfo(title="Successful", message=f"Your {searcher} password is {searched}")
     except _tkinter.TclError:
         entry2.delete(0, "end")
         messagebox.showerror(title="Website not found", message="Website not found")
