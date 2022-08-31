@@ -1,7 +1,7 @@
 import _tkinter
 from tkinter import messagebox
 
-import pyperclip as pc
+# import pyperclip as pc
 from PIL import ImageTk, Image
 from backend import Backend
 import random_pass_gen as rpg
