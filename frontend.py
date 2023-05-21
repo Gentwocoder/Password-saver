@@ -42,7 +42,7 @@ def random_pass():
         entry2.delete(0, "end")
         length = int(entry3.get())
         password = rpg.pass_gen(length)
-        pc.copy(password)
+        # pc.copy(password)
         entry2.insert(tk.END, password)
         entry3.delete(0, "end")
     except ValueError:
