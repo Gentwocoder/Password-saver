@@ -76,7 +76,7 @@ def remove():
 frame = tk.Frame(width=50, height=50)
 frame.pack()
 frame.place(anchor='s', relx=0.5, rely=0.5)
-img = ImageTk.PhotoImage(Image.open("padlock-icon.jpg"))
+img = ImageTk.PhotoImage(Image.open("Images/padlock-icon.jpg"))
 label5 = tk.Label(frame, image=img)
 label5.pack()
 

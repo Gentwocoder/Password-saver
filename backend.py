@@ -46,3 +46,21 @@ class Backend:
             cursor = connection.cursor()
             cursor.execute("DELETE FROM password WHERE website=?", (website,))
             connection.commit()
+
+class User:
+    def create_tab(self):
+        with sqlite3.connect("users.db") as connection:
+            cursor = connection.cursor()
+            cursor.execute("""CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY,
+                username CHAR(25),
+                email CHAR(30),
+                password CHAR(20)
+            )""")
+            connection.commit()
+
+    def create_user(self, username, email, password):
+        with sqlite3.connect("users.db") as connection:
+            cursor = connection.cursor()
+            cursor.execute("""INSERT INTO users VALUES(NULL, ?,?,?)""", (username, email, password))
+            connection.commit()
