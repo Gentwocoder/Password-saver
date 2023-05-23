@@ -95,7 +95,7 @@ class Passwordsaver(tk.Frame):
                 Password: {get_password}
                 """)
                 if answer:
-                    bk.create_password(get_website, get_username, get_password)
+                    bk.create_password(self, get_website, get_username, get_password)
                     messagebox.showinfo(title="Successful", message="Password added successfully")
                     entry.delete(0, "end")
                     entry4.delete(0, "end")
@@ -119,7 +119,7 @@ class Passwordsaver(tk.Frame):
         def search():
             try:
                 searcher = entry.get().lower()
-                searched = bk.view_any(searcher)
+                searched = bk.view_any(self, searcher)
                 entry2.delete(0, "end")
                 entry.delete(0, "end")
                 if searched is None:
@@ -134,7 +134,7 @@ class Passwordsaver(tk.Frame):
             deleter = entry.get().lower()
             answer = messagebox.askokcancel(title="askokcancel", message="Are you sure you want to delete?")
             if answer:
-                bk.delete(deleter)
+                bk.delete(self, deleter)
                 entry.delete(0, "end")
                 messagebox.showinfo(title="Deleted", message="Deleted Successfully")
 
