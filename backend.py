@@ -55,7 +55,7 @@ class User:
                 id INTEGER PRIMARY KEY,
                 username CHAR(25),
                 email CHAR(30),
-                password CHAR(20)
+                password CHAR(30)
             )""")
             connection.commit()
 
