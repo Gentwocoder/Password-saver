@@ -55,6 +55,7 @@ class Signuppage(tk.Frame):
         password = tk.Entry(self, bd=4)
         confirm_pass = tk.Label(self, text="Confirm Password:", font=("Arial", 12))
         confirm_password = tk.Entry(self, bd=4)
+        btn1= tk.Button(self, text="Login", bg="blue", width=20, font=("Arial", 12), command=lambda: controller.show_frame(Loginpage))
         l1.place(x=300, y=50)
         user.place(x=200, y=150)
         username.place(x=400, y=150)
@@ -66,6 +67,7 @@ class Signuppage(tk.Frame):
         confirm_password.place(x=400, y=360)
         btn3 = tk.Button(self, text="Signup", bg="blue", font=("Arial", 12))
         btn3.place(x=350, y=500)
+        btn1.place(x=300, y=570)
 
 class Loginpage(tk.Frame):
     def __init__(self, parent, controller):
@@ -75,6 +77,7 @@ class Loginpage(tk.Frame):
         username = tk.Entry(self, bd=5)
         pass_ = tk.Label(self, text="Password:", font=("Arial", 12))
         password = tk.Entry(self, bd=5)
+        btn1= tk.Button(self, text="Signup", bg="blue", font=("Arial", 12), command=lambda: controller.show_frame(Signuppage))
         l1.place(x=300, y=50)
         user.place(x=200, y=200)
         username.place(x=400, y=200)
@@ -82,6 +85,7 @@ class Loginpage(tk.Frame):
         password.place(x=400, y=300)
         btn4 = tk.Button(self, text="Login", bg="blue", font=("Arial", 12))
         btn4.place(x=350, y=400)
+        btn1.place(x=450, y=400)
 
 class Application(tk.Tk):
     def __init__(self, *args, **kwargs):
