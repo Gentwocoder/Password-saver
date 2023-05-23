@@ -2,11 +2,13 @@ import tkinter as tk
 import _tkinter
 from tkinter import messagebox
 from tkinter import *
-from backend import Backend
+from backend import Backend, User
 from PIL import ImageTk, Image
 import random_pass_gen as rpg
+from cryptography.fernet import Fernet
 
 bk = Backend
+us = User
 
 class Firstpage(tk.Frame):
     def __init__(self, parent, controller):
@@ -21,14 +23,29 @@ class Firstpage(tk.Frame):
         label5 = tk.Label(frame, image=img)
         label5.pack()
 
-        btn1 = tk.Button(self, text="Sign Up", bg="blue", font=("Arial", 12), relief=GROOVE, command=lambda: controller.show_frame(Signuppage))
+        btn1 = tk.Button(self, text="Sign Up", bg="light blue", font=("Arial", 12), relief=GROOVE, command=lambda: controller.show_frame(Signuppage))
         btn1.place(x=240, y=450)
-        btn2 = tk.Button(self, text="Login", bg="blue", font=("Arial", 12), relief=GROOVE, command=lambda: controller.show_frame(Loginpage))
+        btn2 = tk.Button(self, text="Login", bg="light blue", font=("Arial", 12), relief=GROOVE, command=lambda: controller.show_frame(Loginpage))
         btn2.place(x=380, y=450)
 
 class Signuppage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+
+        def register():
+            get_username = username.get()
+            get_email = email.get().lower()
+            get_password = password.get()
+            if len(get_username) != 0 and len(get_email) != 0 and len(get_password) != 0:
+                answer = messagebox.askyesno(title="Confirm Details", message=f"""
+                Please confirm details
+                Username: {get_username}
+                Email: {get_email}
+                Password: {get_password}
+                """)
+                if answer:
+                    us.create_user(self, get_username, get_email, get_password)
+                    messagebox.showinfo(title="Successful", message="User Created Successfully!!")
         l1 = tk.Label(self, text="SIGNUP", font=("Arial Bold", 25))
         l2 = tk.Label(self, text="Already Have an Account?", font=("Arial", 13))
         user = tk.Label(self, text="Username:", font=("Arial", 12))
@@ -39,7 +56,7 @@ class Signuppage(tk.Frame):
         password = tk.Entry(self, bd=4, show="*")
         confirm_pass = tk.Label(self, text="Confirm Password:", font=("Arial", 12))
         confirm_password = tk.Entry(self, bd=4, show="*")
-        btn1= tk.Button(self, text="Login", bg="blue", width=20, font=("Arial", 12), command=lambda: controller.show_frame(Loginpage))
+        btn1= tk.Button(self, text="Login", bg="light blue", width=20, font=("Arial", 12), command=lambda: controller.show_frame(Loginpage))
         l1.place(x=300, y=50)
         user.place(x=200, y=150)
         username.place(x=400, y=150)
@@ -49,7 +66,7 @@ class Signuppage(tk.Frame):
         password.place(x=400, y=290)
         confirm_pass.place(x=200, y=360)
         confirm_password.place(x=400, y=360)
-        btn3 = tk.Button(self, text="Signup", bg="blue", font=("Arial", 12))
+        btn3 = tk.Button(self, text="Signup", bg="light blue", font=("Arial", 12), command=register)
         btn3.place(x=490, y=410)
         l2.place(x=300, y=540)
         btn1.place(x=300, y=570)
@@ -63,13 +80,13 @@ class Loginpage(tk.Frame):
         username = tk.Entry(self, bd=5)
         pass_ = tk.Label(self, text="Password:", font=("Arial", 12))
         password = tk.Entry(self, bd=5, show="*")
-        btn1= tk.Button(self, text="Signup", bg="blue", width=20, font=("Arial", 12), command=lambda: controller.show_frame(Signuppage))
+        btn1= tk.Button(self, text="Signup", bg="light blue", width=20, font=("Arial", 12), command=lambda: controller.show_frame(Signuppage))
         l1.place(x=300, y=50)
         user.place(x=200, y=200)
         username.place(x=400, y=200)
         pass_.place(x=200, y=300)
         password.place(x=400, y=300)
-        btn4 = tk.Button(self, text="Login", bg="blue", font=("Arial", 12), command=lambda: controller.show_frame(Passwordsaver))
+        btn4 = tk.Button(self, text="Login", bg="light blue", font=("Arial", 12), command=lambda: controller.show_frame(Passwordsaver))
         btn4.place(x=500, y=360)
         l2.place(x=290, y=470)
         btn1.place(x=290, y=500)
@@ -147,7 +164,7 @@ class Passwordsaver(tk.Frame):
                 Password: {get_password}
                 """)
                 if answer:
-                    bk.update(self, get_website, get_username, get_password)
+                    bk.update(self, get_username, get_password, get_website)
                     messagebox.showinfo(title="Successful", message="Password Updated Successfully!!")
                     entry.delete(0, "end")
                     entry4.delete(0, "end")
@@ -165,12 +182,12 @@ class Passwordsaver(tk.Frame):
         entry2 = tk.Entry(self, width=20)
         label3 = tk.Label(self, text="Length of Password:", font=("Arial", 17, "bold"))
         entry3 = tk.Entry(self, width=5)
-        btn = tk.Button(self, text="Generate Random Password", width=32, command=random_pass)
-        btn2 = tk.Button(self, text="Save", width=12, command=saver)
-        btn3 = tk.Button(self, text="Search", width=12, command=search)
+        btn = tk.Button(self, text="Generate Random Password", width=32, bg="light blue", command=random_pass)
+        btn2 = tk.Button(self, text="Save", width=12, bg="light blue", command=saver)
+        btn3 = tk.Button(self, text="Search", width=12, bg="light blue", command=search)
         btn4 = tk.Button(self, text="Delete", width=12, bg="red", command=remove)
-        btn5 = tk.Button(self, text="View all", width=12, command=all)
-        btn6 = tk.Button(self, text="Update", width=12, command=change)
+        btn5 = tk.Button(self, text="View all", width=12, bg="light blue", command=all)
+        btn6 = tk.Button(self, text="Update", width=12, bg="light blue", command=change)
 
 
         label.place(x=160, y=220)
@@ -210,4 +227,6 @@ class Application(tk.Tk):
         frame.tkraise()
 
 app = Application()
+app.maxsize(700, 700)
+app.title("Password Saver")
 app.mainloop()

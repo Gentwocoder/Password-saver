@@ -29,16 +29,16 @@ class Backend:
     def view_any(self, website):
         with sqlite3.connect("data.db") as connection:
             cursor = connection.cursor()
-            cursor.execute("SELECT password FROM password WHERE website=?", (website,))
+            cursor.execute("SELECT username, password FROM password WHERE website=?", (website,))
             rows = cursor.fetchall()
             connection.commit()
             for row in rows:
                 return "".join(row)
 
-    def update(self, website, username, password):
+    def update(self, username, password, website):
         with sqlite3.connect("data.db") as connection:
             cursor = connection.cursor()
-            cursor.execute("UPDATE password SET username=?, password=? WHERE website=?", (website, username, password))
+            cursor.execute("UPDATE password SET username=?, password=? WHERE website=?", (username, password, website))
             connection.commit()
 
     def delete(self, website):
