@@ -46,6 +46,8 @@ class Signuppage(tk.Frame):
                 if answer:
                     us.create_user(self, get_username, get_email, get_password)
                     messagebox.showinfo(title="Successful", message="User Created Successfully!!")
+            else:
+                messagebox.showerror(title="Blank Spaces", message="No blank spaces!!")
         l1 = tk.Label(self, text="SIGNUP", font=("Arial Bold", 25))
         l2 = tk.Label(self, text="Already Have an Account?", font=("Arial", 13))
         user = tk.Label(self, text="Username:", font=("Arial", 12))
@@ -74,6 +76,10 @@ class Signuppage(tk.Frame):
 class Loginpage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+
+        def signin():
+            get_username = username.get()
+            get_password = password.get()
         l1 = tk.Label(self, text="LOGIN", font=("Arial Bold", 25))
         l2 = tk.Label(self, text="Don't have an Account?", font=("Arial", 13))
         user = tk.Label(self, text="Username:", font=("Arial", 12))
@@ -136,7 +142,7 @@ class Passwordsaver(tk.Frame):
                 if searched is None:
                     messagebox.showerror(title="Not Found", message="Password not found")
                 else:
-                    messagebox.showinfo(title="Successful", message=f"Your {searcher} password is {searched}")
+                    messagebox.showinfo(title="Successful", message=f"Your {searcher} username and password is {searched}")
             except _tkinter.TclError:
                 entry2.delete(0, "end")
                 messagebox.showerror(title="Website not found", message="Website not found")

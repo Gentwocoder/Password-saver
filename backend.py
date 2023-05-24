@@ -33,7 +33,7 @@ class Backend:
             rows = cursor.fetchall()
             connection.commit()
             for row in rows:
-                return "".join(row)
+                return " and ".join(row)
 
     def update(self, username, password, website):
         with sqlite3.connect("data.db") as connection:
@@ -63,4 +63,10 @@ class User:
         with sqlite3.connect("users.db") as connection:
             cursor = connection.cursor()
             cursor.execute("""INSERT INTO users VALUES(NULL, ?,?,?)""", (username, email, password))
+            connection.commit()
+
+    def check_user(self, username):
+        with sqlite3.connect("users.db") as connection:
+            cursor = connection.cursor()
+            cursor.execute("""SELECT password FROM users WHERE username=?""", (username,))
             connection.commit()
