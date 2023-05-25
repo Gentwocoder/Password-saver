@@ -1,5 +1,6 @@
 import tkinter as tk
 import _tkinter
+import sqlite3
 from tkinter import messagebox
 from tkinter import *
 from backend import Backend, User
@@ -9,6 +10,8 @@ import bcrypt
 
 bk = Backend
 us = User
+conn = sqlite3.connect("data.db")
+cursor = conn.cursor()
 
 class Firstpage(tk.Frame):
     def __init__(self, parent, controller):
@@ -36,18 +39,22 @@ class Signuppage(tk.Frame):
             get_username = username.get()
             get_email = email.get().lower()
             get_password = password.get()
-            # get_password2 = confirm_password.get()
             if len(get_username) != 0 and len(get_email) != 0 and len(get_password) != 0:              
-                check_username = us.validate_username(self, get_username)
-                if check_username is not None:
-                    messagebox.showerror(tile="Error", message="Username already exists.")
-                encoded_password = get_password.encode("utf-8")
-                hashed_password = bcrypt.hashpw(encoded_password, bcrypt.gensalt())
-                us.create_user(self, get_username, get_email, hashed_password)
-                messagebox.showinfo(title="Successful", message="User Created Successfully!!")
-                controller.show_frame(Loginpage)
+                cursor.execute("SELECT username FROM users WHERE username=?", (get_username,))
+                if cursor.fetchone() is not None:
+                    messagebox.showerror(title="Error", message="Username already exists.")
+                else:
+                    encoded_password = get_password.encode("utf-8")
+                    hashed_password = bcrypt.hashpw(encoded_password, bcrypt.gensalt())
+                    us.create_user(self, get_username, get_email, hashed_password)
+                    username.delete(0, END)
+                    email.delete(0, END)
+                    password.delete(0, END)
+                    username.focus()
+                    messagebox.showinfo(title="Successful", message="User Created Successfully!!")
+                    controller.show_frame(Loginpage)
             else:
-                messagebox.showerror(title="Blank Spaces", message="No blank spaces!!")
+                messagebox.showerror(title="Error", message="No blank spaces!!")
         l1 = tk.Label(self, text="SIGNUP", font=("Arial Bold", 25))
         l2 = tk.Label(self, text="Already Have an Account?", font=("Arial", 13))
         user = tk.Label(self, text="Username:", font=("Arial", 12))

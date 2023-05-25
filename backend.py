@@ -54,15 +54,14 @@ class User:
             cursor.execute("""CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY,
                 username CHAR(25),
-                email CHAR(30),
                 password CHAR(30)
             )""")
             connection.commit()
 
-    def create_user(self, username, email, password):
+    def create_user(self, username, password):
         with sqlite3.connect("data.db") as connection:
             cursor = connection.cursor()
-            cursor.execute("""INSERT INTO users VALUES(NULL, ?,?,?)""", (username, email, password))
+            cursor.execute("""INSERT INTO users VALUES(NULL, ?,?)""", (username, password))
             connection.commit()
 
     def check_user(self, username):
@@ -76,3 +75,6 @@ class User:
             cursor = connection.cursor()
             cursor.execute("SELECT username FROM users WHERE username=?", (username,)).fetchone()
             connection.commit()
+
+app = User()
+app.create_tab()
