@@ -5,7 +5,7 @@ from tkinter import *
 from backend import Backend, User
 from PIL import ImageTk, Image
 import random_pass_gen as rpg
-from cryptography.fernet import Fernet
+import bcrypt
 
 bk = Backend
 us = User
@@ -36,20 +36,16 @@ class Signuppage(tk.Frame):
             get_username = username.get()
             get_email = email.get().lower()
             get_password = password.get()
-            get_password2 = confirm_password.get()
-            if len(get_username) != 0 and len(get_email) != 0 and len(get_password) != 0 and len(get_password2) != 0:
-                if get_password == get_password2:
-                    answer = messagebox.askyesno(title="Confirm Details", message=f"""
-                    Please confirm details
-                    Username: {get_username}
-                    Email: {get_email}
-                    """)
-                    if answer:
-                        us.create_user(self, get_username, get_email, get_password)
-                        messagebox.showinfo(title="Successful", message="User Created Successfully!!")
-                        controller.show_frame(Loginpage)
-                else:
-                    messagebox.showerror(title="Match Password", message="Passwords don't match!!")
+            # get_password2 = confirm_password.get()
+            if len(get_username) != 0 and len(get_email) != 0 and len(get_password) != 0:              
+                check_username = us.validate_username(self, get_username)
+                if check_username is not None:
+                    messagebox.showerror(tile="Error", message="Username already exists.")
+                encoded_password = get_password.encode("utf-8")
+                hashed_password = bcrypt.hashpw(encoded_password, bcrypt.gensalt())
+                us.create_user(self, get_username, get_email, hashed_password)
+                messagebox.showinfo(title="Successful", message="User Created Successfully!!")
+                controller.show_frame(Loginpage)
             else:
                 messagebox.showerror(title="Blank Spaces", message="No blank spaces!!")
         l1 = tk.Label(self, text="SIGNUP", font=("Arial Bold", 25))
@@ -60,8 +56,6 @@ class Signuppage(tk.Frame):
         email = tk.Entry(self, bd=4)
         pass_ = tk.Label(self, text="Password:", font=("Arial", 12))
         password = tk.Entry(self, bd=4, show="*")
-        confirm_pass = tk.Label(self, text="Confirm Password:", font=("Arial", 12))
-        confirm_password = tk.Entry(self, bd=4, show="*")
         btn1= tk.Button(self, text="Login", bg="light blue", width=20, font=("Arial", 12), command=lambda: controller.show_frame(Loginpage), cursor="hand2")
         l1.place(x=300, y=50)
         user.place(x=200, y=150)
@@ -70,8 +64,6 @@ class Signuppage(tk.Frame):
         email.place(x=400, y=220)
         pass_.place(x=200, y=290)
         password.place(x=400, y=290)
-        confirm_pass.place(x=200, y=360)
-        confirm_password.place(x=400, y=360)
         btn3 = tk.Button(self, text="Signup", bg="light blue", font=("Arial", 12), command=register, cursor="hand2")
         btn3.place(x=490, y=410)
         l2.place(x=300, y=540)

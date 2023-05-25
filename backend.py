@@ -71,5 +71,8 @@ class User:
             cursor.execute("""SELECT password FROM users WHERE username=?""", (username,))
             connection.commit()
 
-app = User()
-app.create_tab()
+    def validate_username(self, username):
+        with sqlite3.connect("data.db") as connection:
+            cursor = connection.cursor()
+            cursor.execute("SELECT username FROM users WHERE username=?", (username,)).fetchone()
+            connection.commit()
