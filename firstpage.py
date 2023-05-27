@@ -214,7 +214,7 @@ class Passwordsaver(tk.Frame):
         btn2 = tk.Button(self, text="Save", width=12, bg="light blue", command=saver, cursor="hand2")
         btn3 = tk.Button(self, text="Search", width=12, bg="light blue", command=search, cursor="hand2")
         btn4 = tk.Button(self, text="Delete", width=12, bg="red", command=remove, cursor="hand2")
-        btn5 = tk.Button(self, text="View all", width=12, bg="light blue", command=all, cursor="hand2")
+        # btn5 = tk.Button(self, text="View all", width=12, bg="light blue", command=all, cursor="hand2")
         btn6 = tk.Button(self, text="Update", width=12, bg="light blue", command=change, cursor="hand2")
 
 
@@ -229,8 +229,8 @@ class Passwordsaver(tk.Frame):
         btn.place(x=160, y=430)
         btn2.place(x=160, y=490)
         btn3.place(x=318, y=490)
-        btn5.place(x=160, y=540)
-        btn6.place(x=318, y=540)
+        # btn5.place(x=160, y=540)
+        btn6.place(x=240, y=540)
         btn4.place(x=240, y=600)
 
 class Application(tk.Tk):
