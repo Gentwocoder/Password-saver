@@ -65,25 +65,3 @@ class Backend:
             cursor.execute("""INSERT INTO users VALUES(NULL, ?,?)""", (username, password))
             connection.commit()
 
-class User:
-    def create_tab(self):
-        with sqlite3.connect("data.db") as connection:
-            cursor = connection.cursor()
-            cursor.execute("""CREATE TABLE IF NOT EXISTS users (
-                user_id INTEGER PRIMARY KEY,
-                username CHAR(25),
-                password CHAR(30),
-                FOREIGN KEY (password_id) REFERENCES password (password_id)
-            )""")
-            connection.commit()
-
-    def create_user(self, username, password):
-        with sqlite3.connect("data.db") as connection:
-            cursor = connection.cursor()
-            cursor.execute("""INSERT INTO users VALUES(NULL, ?,?)""", (username, password))
-            connection.commit()
-
-
-# app1 = Backend()
-# app1.create_table()
-# app1.create_tab()

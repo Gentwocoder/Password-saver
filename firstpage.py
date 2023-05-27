@@ -1,33 +1,31 @@
+# Import all modules
 import tkinter as tk
 import _tkinter
 import sqlite3
 from tkinter import messagebox
 from tkinter import *
-from backend import Backend, User
+from backend import Backend
 from PIL import ImageTk, Image
 import random_pass_gen as rpg
 import bcrypt
 from cryptography.fernet import Fernet
 
+# Define 
 bk = Backend
-us = User
 conn = sqlite3.connect("data.db")
 cursor = conn.cursor()
 
+# Key for encrypting and decrypting the saved passwords
 encryption_key = b'qfRbKPFgVL2pDHzbu6TAPAYKwRnq0fLjAvCA_Xn3S1k='
-# encryption_key = config("ENCRYPTION_KEY")
-# print(encryption_key)
 cipher = Fernet(encryption_key)
 
+# First Page of the Program
 class Firstpage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         label1 = tk.Label(self, text="Welcome to Group 2 Password Manager", font=("Arial", 17))
         label1.place(x=170, y=50)
 
-        # frame = tk.Frame(self, width=50, height=50)
-        # frame.pack()
-        # frame.place(anchor='s', relx=0.5, rely=0.5)
         img = ImageTk.PhotoImage(Image.open("Images/padlock-icon.jpg"))
         label5 = tk.Label(self, image=img)
         label5.image = img
@@ -38,10 +36,12 @@ class Firstpage(tk.Frame):
         btn2 = tk.Button(self, text="Login", bg="light blue", font=("Arial", 12), relief=GROOVE, command=lambda: controller.show_frame(Loginpage), cursor="hand2")
         btn2.place(x=380, y=450)
 
+# Sign up page
 class Signuppage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
+        # Function for registration
         def register():
             get_username = username.get()
             get_password = password.get()
@@ -60,6 +60,8 @@ class Signuppage(tk.Frame):
                     controller.show_frame(Loginpage)
             else:
                 messagebox.showerror(title="Error", message="No blank spaces!!")
+        
+        # Defining all element on the page
         l1 = tk.Label(self, text="SIGNUP", font=("Arial Bold", 25))
         l2 = tk.Label(self, text="Already Have an Account?", font=("Arial", 13))
         user = tk.Label(self, text="Username:", font=("Arial", 12))
@@ -77,10 +79,12 @@ class Signuppage(tk.Frame):
         l2.place(x=275, y=440)
         btn1.place(x=275, y=470)
 
+# Login page
 class Loginpage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
+        # Function for logging in
         def signin():
             get_username = username.get()
             get_password = password.get()
@@ -97,6 +101,8 @@ class Loginpage(tk.Frame):
                     messagebox.showerror("Error", "Username not found!!")
             else:
                 messagebox.showerror(title="Error", message="No space should be left blank!!")
+
+        # Defining all elements on the page
         l1 = tk.Label(self, text="LOGIN", font=("Arial Bold", 25))
         l2 = tk.Label(self, text="Don't have an Account?", font=("Arial", 13))
         user = tk.Label(self, text="Username:", font=("Arial", 12))
@@ -114,10 +120,12 @@ class Loginpage(tk.Frame):
         l2.place(x=290, y=470)
         btn1.place(x=290, y=500)
 
+# The password manager page
 class Passwordsaver(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
+        # Function for adding a new password
         def saver():
             get_website = entry.get().lower()
             get_username = entry4.get().lower()
@@ -140,6 +148,7 @@ class Passwordsaver(tk.Frame):
                 messagebox.showerror(title="No blank spaces", message="No space should be left blank")
                 entry.focus()
 
+        # Function for generating a random password
         def random_pass():
             try:
                 entry2.delete(0, "end")
@@ -151,6 +160,7 @@ class Passwordsaver(tk.Frame):
             except ValueError:
                 messagebox.showwarning(title="Please input a length", message="Password length cannot be empty")
 
+        # Function for searching a saved password
         def search():
             try:
                 searcher = entry.get().lower()
@@ -166,6 +176,7 @@ class Passwordsaver(tk.Frame):
                 entry2.delete(0, "end")
                 messagebox.showerror(title="Error", message="Website not found")
 
+        # Function for a deleting a saved password
         def remove():
             deleter = entry.get().lower()
             answer = messagebox.askokcancel(title="Delete", message="Are you sure you want to delete?")
@@ -174,12 +185,7 @@ class Passwordsaver(tk.Frame):
                 entry.delete(0, "end")
                 messagebox.showinfo(title="Deleted", message="Deleted Successfully")
 
-        def all():
-            password = cursor.execute("SELECT password FROM password").fetchone()
-            decrypted_password = cipher.decrypt(password).decode()
-            all_passwords = bk.view_all(self)
-            messagebox.showinfo(title="All passwords", message=f"{all_passwords}, {decrypted_password}")
-
+        # Function for changing the information of a password
         def change():
             get_website = entry.get().lower()
             get_username = entry4.get().lower()
@@ -201,7 +207,7 @@ class Passwordsaver(tk.Frame):
             elif get_website is None:
                 messagebox.showerror(title="Not Found", message="Website does not exist!!")
 
-
+        # Defining the elements of the page
         label = tk.Label(self, text="Website:", font=("Arial", 17, "bold"))
         entry = tk.Entry(self, width=20)
         label4 = tk.Label(self, text="Username:", font=("Arial", 17, "bold"))
@@ -233,6 +239,7 @@ class Passwordsaver(tk.Frame):
         btn6.place(x=240, y=540)
         btn4.place(x=240, y=600)
 
+# Class handling the application
 class Application(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
@@ -254,6 +261,7 @@ class Application(tk.Tk):
         frame = self.frames[page]
         frame.tkraise()
 
+# Calling the application
 app = Application()
 app.maxsize(700, 700)
 app.title("Password Manager")
