@@ -31,12 +31,6 @@ class Backend:
             cursor.execute("""INSERT INTO password VALUES(NULL, ?,?,?)""", (website, username, password))
             connection.commit()
 
-    def view_all(self):
-        with sqlite3.connect("data.db") as connection:
-            cursor = connection.cursor()
-            all_data = cursor.execute("SELECT website, username FROM password").fetchall()
-            connection.commit()
-            return all_data
 
     def view_any(self, website):
         with sqlite3.connect("data.db") as connection:
