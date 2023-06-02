@@ -1,6 +1,5 @@
 # Import all modules
 import tkinter as tk
-import _tkinter
 import sqlite3
 from tkinter import messagebox
 from tkinter import *
@@ -23,7 +22,7 @@ cipher = Fernet(encryption_key)
 class Firstpage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label1 = tk.Label(self, text="Welcome to Group 2 Password Manager", font=("Arial", 17))
+        label1 = tk.Label(self, text="L33ta Password Manager", font=("Arial", 17))
         label1.place(x=170, y=50)
 
         img = ImageTk.PhotoImage(Image.open("Images/padlock-icon.jpg"))
