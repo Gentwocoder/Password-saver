@@ -23,7 +23,7 @@ class Firstpage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.configure(bg="#03045e")
-        label1 = tk.Label(self, text="L33ta Password Manager", font=("Arial", 25), bg="#03045e")
+        label1 = tk.Label(self, text="L33ta Password Manager", font=("Arial", 25), bg="#03045e", foreground="light blue")
         label1.place(x=140, y=50)
 
         img = ImageTk.PhotoImage(Image.open("Images/padlock-icon.png"))
