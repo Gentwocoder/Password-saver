@@ -22,11 +22,12 @@ cipher = Fernet(encryption_key)
 class Firstpage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label1 = tk.Label(self, text="L33ta Password Manager", font=("Arial", 17))
-        label1.place(x=170, y=50)
+        self.configure(bg="#03045e")
+        label1 = tk.Label(self, text="L33ta Password Manager", font=("Arial", 25), bg="#03045e")
+        label1.place(x=140, y=50)
 
-        img = ImageTk.PhotoImage(Image.open("Images/padlock-icon.jpg"))
-        label5 = tk.Label(self, image=img)
+        img = ImageTk.PhotoImage(Image.open("Images/padlock-icon.png"))
+        label5 = tk.Label(self, image=img, bg="#03045e")
         label5.image = img
         label5.place(x=250, y=110)
 
@@ -39,6 +40,7 @@ class Firstpage(tk.Frame):
 class Signuppage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.configure(bg="#03045e")
 
         # Function for registration
         def register():
@@ -61,11 +63,11 @@ class Signuppage(tk.Frame):
                 messagebox.showerror(title="Error", message="No blank spaces!!")
         
         # Defining all element on the page
-        l1 = tk.Label(self, text="SIGNUP", font=("Arial Bold", 25))
-        l2 = tk.Label(self, text="Already Have an Account?", font=("Arial", 13))
-        user = tk.Label(self, text="Username:", font=("Arial", 12))
+        l1 = tk.Label(self, text="SIGNUP", font=("Arial Bold", 25), bg="#03045e")
+        l2 = tk.Label(self, text="Already Have an Account?", font=("Arial", 13), bg="#03045e")
+        user = tk.Label(self, text="Username:", font=("Arial", 15), bg="#03045e")
         username = tk.Entry(self, bd=4)
-        pass_ = tk.Label(self, text="Password:", font=("Arial", 12))
+        pass_ = tk.Label(self, text="Password:", font=("Arial", 15), bg="#03045e")
         password = tk.Entry(self, bd=4, show="*")
         btn1= tk.Button(self, text="Login", bg="light blue", width=20, font=("Arial", 12), command=lambda: controller.show_frame(Loginpage), cursor="hand2")
         l1.place(x=300, y=50)
@@ -82,6 +84,7 @@ class Signuppage(tk.Frame):
 class Loginpage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.configure(bg="#03045e")
 
         # Function for logging in
         def signin():
@@ -102,11 +105,11 @@ class Loginpage(tk.Frame):
                 messagebox.showerror(title="Error", message="No space should be left blank!!")
 
         # Defining all elements on the page
-        l1 = tk.Label(self, text="LOGIN", font=("Arial Bold", 25))
-        l2 = tk.Label(self, text="Don't have an Account?", font=("Arial", 13))
-        user = tk.Label(self, text="Username:", font=("Arial", 12))
+        l1 = tk.Label(self, text="LOGIN", font=("Arial Bold", 25), bg="#03045e")
+        l2 = tk.Label(self, text="Don't have an Account?", font=("Arial", 13), bg="#03045e")
+        user = tk.Label(self, text="Username:", font=("Arial", 15), bg="#03045e")
         username = tk.Entry(self, bd=5)
-        pass_ = tk.Label(self, text="Password:", font=("Arial", 12))
+        pass_ = tk.Label(self, text="Password:", font=("Arial", 15), bg="#03045e")
         password = tk.Entry(self, bd=5, show="*")
         btn1= tk.Button(self, text="Signup", bg="light blue", width=20, font=("Arial", 12), command=lambda: controller.show_frame(Signuppage), cursor="hand2")
         l1.place(x=300, y=50)
@@ -123,6 +126,7 @@ class Loginpage(tk.Frame):
 class Passwordsaver(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.configure(bg="#03045e")
 
         # Function for adding a new password
         def saver():
@@ -207,13 +211,13 @@ class Passwordsaver(tk.Frame):
                 messagebox.showerror(title="Not Found", message="Website does not exist!!")
 
         # Defining the elements of the page
-        label = tk.Label(self, text="Website:", font=("Arial", 17, "bold"))
+        label = tk.Label(self, text="Website:", font=("Arial", 17, "bold"), bg="#03045e")
         entry = tk.Entry(self, width=20)
-        label4 = tk.Label(self, text="Username:", font=("Arial", 17, "bold"))
+        label4 = tk.Label(self, text="Username:", font=("Arial", 17, "bold"), bg="#03045e")
         entry4 = tk.Entry(self, width=20)
-        label2 = tk.Label(self, text="Password:", font=("Arial", 17, "bold"))
+        label2 = tk.Label(self, text="Password:", font=("Arial", 17, "bold"), bg="#03045e")
         entry2 = tk.Entry(self, width=20)
-        label3 = tk.Label(self, text="Length of Password:", font=("Arial", 17, "bold"))
+        label3 = tk.Label(self, text="Length of Password:", font=("Arial", 17, "bold"), bg="#03045e")
         entry3 = tk.Entry(self, width=5)
         btn = tk.Button(self, text="Generate Random Password", width=32, bg="light blue", command=random_pass, cursor="hand2")
         btn2 = tk.Button(self, text="Save", width=12, bg="light blue", command=saver, cursor="hand2")
